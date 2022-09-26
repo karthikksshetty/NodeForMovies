@@ -44,7 +44,7 @@ message.addData('message', 'Loaded from URL');
 message.addData('image', 'https://pbs.twimg.com/profile_images/837060031895896065/VHIQ4oUf_400x400.jpg');
 message.addData('image-type', 'circular');
 // Set up the sender with you API key
-var sender = new gcm.Sender('AIzaSyAWis2RNvJx99YWG74_RHjrlwemgd-Yltc');
+var sender = new gcm.Sender('apikey');
 
 // Add the registration tokens of the devices you want to send to
 var registrationTokens = [];
