@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+    <script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js" 
+            id="sap-ui-bootstrap"
+            data-sap-ui-libs="sap.ui.commons,sap.ui.table,sap.m" 
+            data-sap-ui-xx-bindingSyntax="complex"
+            data-sap-ui-theme="sap_bluecrystal"></script>
+	<script>
+	var oTable = new sap.ui.table.Table({ 
+  		selectionMode: sap.ui.table.SelectionMode.Row,
+  		fixedColumnCount: 1,
+  		columns: [  
+   		 new sap.ui.table.Column({  
+     		 width: '120px',
+      		label: new sap.ui.commons.TextView({  
+       		 text: "Name"  
+     		 }),  
+     		 template: new sap.ui.commons.TextView({  
+     		   text: "{name}"  
+    		  })  
+  		  }),
+  		  new sap.ui.table.Column({
+    		  width: '100px',
+     		 label: new sap.ui.commons.TextView({  
+     		   text: "Age"  
+    		  }),  
+   		   template: new sap.ui.commons.TextView({  
+   		     text: "{age}"
+   		   })  
+   		 }) 
+		  ]
+	});
+
+var model = new sap.ui.model.json.JSONModel({
+  results: [
+    { name: "Paul Young", age: 10 },
+    { name: "Mary Middlestone", age: 30 },
+    { name: "Old Navy", age: 60 }
+  ] 
+});
+
+		oTable.bindRows("/results");
+		oTable.setModel(model);
+		oTable.placeAt('content');	
+	</script>	
+  </head>
+  <body id="content" class="sapUiBody">
+  </body>
+</html>

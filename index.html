@@ -1,0 +1,120 @@
+<html>
+	<head>
+		<!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+
+		<script src="https://sapui5.hana.ondemand.com/1.44.51/resources/sap-ui-core.js"
+				id="sap-ui-bootstrap"
+				data-sap-ui-libs="sap.m,sap.ui.layout"
+				data-sap-ui-theme="sap_bluecrystal">//"https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"	//resources/sap-ui-core.js
+		</script>
+		<!-- only load the mobile lib "sap.m" and the "sap_bluecrystal" theme -->
+
+		<script>
+				var oUserForm = new sap.ui.layout.form.SimpleForm('idForm',{
+					width:'100%',
+					editable:true,
+					maxContainerCols : 2,
+					backgroundDesign : sap.ui.layout.BackgroundDesign.Transparent,
+					layout:"ResponsiveGridLayout",
+					title:"Login",
+					labelSpanXL:3,
+					labelSpanL:4,
+					labelSpanM:3,
+					labelSpanS:12,
+					adjustLabelSpan:false,
+					emptySpanXL:4,
+					emptySpanL:4,
+					emptySpanM:4,
+					emptySpanS:0,
+					columnsXL:1,
+					columnsL:1,
+					columnsM:1,
+					singleContainerFullSize:true,
+					content : [new sap.m.Label({
+									text : "User Name",
+									design : sap.m.LabelDesign.Bold
+								}),
+								new sap.m.Input('idUserName',{
+									change : function(){
+										oController.getView().byId('idSignInBtn').firePress();
+									}
+								}),
+								new sap.m.Label({
+									text : "Password",
+									design : sap.m.LabelDesign.Bold
+								}),
+								new sap.m.Input('idPassword',{
+									type:sap.m.InputType.Password,
+									change : function(){
+										oController.getView().byId('idSignInBtn').firePress();
+									}
+								}),
+					           ]
+				});
+				var oSignInBtn = new sap.m.Button('idSignInBtn',{
+					text : 'Sign in',
+					type : 'Emphasized',
+					press : function(){
+						authenticate();
+					}
+				});
+				var oForgotPassBtn = new sap.m.Button({
+					text : 'Forgot password?',
+					type : 'Emphasized',
+					press : function(){
+						
+					}
+				});
+				var oSignBtnsBar = new sap.m.Bar({
+					contentMiddle : [oSignInBtn,oForgotPassBtn],
+					design : sap.m.BarDesign.Auto
+				}).addStyleClass('barBackground');
+				var oPanel = new sap.m.Panel({
+					width : "100%",
+					backgroundDesign : sap.m.BackgroundDesign.Translucent,
+					content : [oUserForm,oSignBtnsBar]
+				}).addStyleClass('loginPanelPosition');
+		 		var oPage = new sap.m.Page({
+		 			showHeader : false,
+					content: [oPanel]
+				});
+				function authenticate(){
+					var userName = sap.ui.getCore().byId('idUserName').getValue();
+					var password = sap.ui.getCore().byId('idPassword').getValue();
+					if(userName!='' && password!=''){
+						var requestBody = {};
+							requestBody.userName = userName;
+							requestBody.password = password;
+						$.post("http://localhost:8085/login",requestBody,function(data){ //if query->"http://localhost:8085/form?"+requestString
+				            data = JSON.parse(data);
+				            alert(data);
+				        },"json"//"json"  if requestBody used & "text"  if requestString used
+						).done(function(response,status) {
+						    alert(status);
+						}).fail(function(response,status) {
+						    alert(status);
+						});
+					}else{
+						if(userName==''){
+							sap.ui.getCore().byId('idUserName').setValueState('Error');
+							sap.ui.getCore().byId('idPassword').setValueState('Error');
+						}else{
+							
+						}
+					}
+					
+				}
+				/* sap.ui.localResources("movies");
+				var app = new sap.m.App({initialPage:"idLoginPage"});
+				var page = sap.ui.view({id:"idLoginPage", viewName:"movies.LoginPage", type:sap.ui.core.mvc.ViewType.JS});
+				app.addPage(page); */
+				oPage.placeAt("content");
+		</script>
+
+	</head>
+	<body class="sapUiBody" role="application">
+		<div id="content"></div>
+	</body>
+</html>

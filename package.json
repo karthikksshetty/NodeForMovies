@@ -1,0 +1,23 @@
+{
+  "name": "first",
+  "version": "1.0.0",
+  "description": "connection with form",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "karthik",
+  "license": "ISC",
+  "dependencies": {
+    "base-64": "^0.1.0",
+    "body-parser": "^1.16.1",
+    "connect": "^3.6.0",
+    "express": "^4.14.1",
+    "fs": "0.0.1-security",
+    "http": "0.0.0",
+    "jsonwebtoken": "^8.1.0",
+    "mongoose": "^4.9.6",
+    "node-gcm": "^0.14.6",
+    "serve-static": "^1.12.1"
+  }
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form input for node test</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+         function ajaxCall(){
+           var user=document.getElementById('user').value;
+            var pass=document.getElementById('password').value;
+            var pass1=document.getElementById('password1').value;
+             var imageFile=document.getElementById('fileUpload').files[0];
+            var requestBody={
+                movieName: user,
+                cast: [pass,pass1]
+            };
+             var requestString='movieName='+user+'&cast='+pass;
+            $.post("http://localhost:8085/insertMovie",requestBody, function(data){ //if query->"http://localhost:8085/form?"+requestString
+                //data = JSON.parse(data);
+                    alert(data);
+                },"text"//"json"  if requestBody used & "text"  if requestString used
+            ).done(function(response,status) {
+                alert(status);
+            }).fail(function(response,status) {
+                alert(status);
+            });
+         }
+         function ajaxCall1(){
+             $.get("http://localhost:8085/findMovie",function(data){ //if query->"http://localhost:8085/form?"+requestString
+                         data = JSON.parse(data);
+                         alert(data);
+                     },"text"//"json"  if requestBody used & "text"  if requestString used
+             ).done(function(response,status) {
+                 alert(status);
+             }).fail(function(response,status) {
+                 alert(status);
+             });
+         }
+         function ajaxCall2(){
+             $.get("http://localhost:8085/findImage",function(data){ //if query->"http://localhost:8085/form?"+requestString
+
+                     },"text"//"json"  if requestBody used & "text"  if requestString used
+             ).done(function(response,status) {
+                 alert(status);
+             }).fail(function(response,status) {
+                 alert(status);
+             });
+         }
+         /*function serviceCall(){
+          var user=document.getElementById('user').value;
+          var pass=document.getElementById('password').value;
+          var requestBody={
+            userName: user,password: pass
+          };
+              $.ajax({
+                  type: "POST",
+                  url: "http://localhost:8085/form",
+                  data: requestBody,
+                  success: function(){
+
+                  },
+                  dataType: "json"
+              });
+         }
+         function serviceCall(){
+             var http = new XMLHttpRequest();
+             var url = "http://localhost:8085/form";
+             var user=document.getElementById('user').value;
+             var pass=document.getElementById('password').value;
+             var params = "userName="+user+"&password="+pass;
+             http.open("POST", url, true);
+             http.setRequestHeader("Content-type", "application/json");
+             //http.setRequestHeader("Content-length", params.length);
+             //http.setRequestHeader("Connection", "close");
+
+             http.onreadystatechange = function() {//Call a function when the state changes.
+                 if(http.readyState == 4 && http.status == 200) {
+                     alert(http.responseText);
+                 }
+             }
+             http.send(params);
+         }*/
+        function successFinish() {
+            alert("SuccessForm");
+        }
+    </script>
+</head>
+<body>
+<!--<form action="http://localhost:8085/form" method="POST" enctype="application/json" target="successFinish()">
+    User Name : <input type="text" name="userName" id="user"/>
+    Password : <input type="text" name="password" id="password"/>
+    <input type="submit" name="Submit" value="Submit"/>
+</form>-->
+User Name : <input type="text" name="userName" id="user"/>
+Password : <input type="text" name="password" id="password"/>
+Password1 : <input type="text" name="password" id="password1"/>
+Image upload : <input type="file" name="upload" id="fileUpload"/>
+<button type="button" onclick="ajaxCall()">Submit</button>
+<button type="button" onclick="ajaxCall1()">Find</button>
+<button type="button" onclick="ajaxCall2()">Find Image</button>
+</body>
+</html>
